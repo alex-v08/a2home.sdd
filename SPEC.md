@@ -77,6 +77,10 @@ El sistema debe seguir principios de **Clean Architecture (Hexagonal)** tanto en
 - [x] Diagramas Mermaid de flujos clave.
 - [x] Tests unitarios del Core Domain (Jest).
 
+### Fase 6: E2E Automation
+- [x] Tests E2E con Playwright (Flujo completo Cliente-Proveedor).
+- [x] Verificación de WebSockets en tiempo real.
+
 ---
 **Instrucciones para Agentes:**
 Este archivo es la fuente de la verdad. Si una tarea está marcada como `[ ]`, es prioritaria. Al terminar, marcar con `[x]`.
