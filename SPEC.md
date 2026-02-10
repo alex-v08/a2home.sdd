@@ -57,6 +57,7 @@ El sistema debe seguir principios de **Clean Architecture (Hexagonal)** tanto en
 
 ### Fase 2: Adaptadores Backend (Microservicios)
 - [x] Setup inicial de NestJS y exportación de Casos de Uso del Core.
+- [x] Adaptador PostgreSQL con Prisma y Mapeo de Entidades.
 - [ ] Migrar/Adaptar servicios existentes a la nueva especificación estricta.
 
 ### Fase 3: UI Implementation
