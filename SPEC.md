@@ -63,6 +63,7 @@ El sistema debe seguir principios de **Clean Architecture (Hexagonal)** tanto en
 ### Fase 3: UI Implementation
 - [x] Implementar UI Web (Next.js) con componente compartido.
 - [x] Implementar UI Mobile (Expo) con componente compartido.
+- [x] Integración Frontend-Backend con API REST.
 
 ### Fase 4: Integración Real-Time
 - [ ] Chat y Tracking.
