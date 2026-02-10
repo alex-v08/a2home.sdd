@@ -53,7 +53,7 @@ El sistema debe seguir principios de **Clean Architecture (Hexagonal)** tanto en
 
 ### Fase 1: Core Domain (Lógica Pura)
 - [x] Definir Entidades del Dominio (User, Service, Booking).
-- [ ] Implementar Casos de Uso Core (Login, CreateRequest, MatchProvider).
+- [x] Implementar Casos de Uso Core (Login, CreateRequest, MatchProvider).
 
 ### Fase 2: Adaptadores Backend (Microservicios)
 - [ ] Migrar/Adaptar servicios existentes a la nueva especificación estricta.
