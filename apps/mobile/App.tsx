@@ -1,61 +1,69 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Alert, Text, Button } from 'react-native';
-import { BookingForm, ProviderBookingList } from '@a2home/ui';
+import { 
+  BookingForm, 
+  ProviderBookingList, 
+  LoginScreen, 
+  AuthProvider, 
+  useAuth,
+  useBookingService 
+} from '@a2home/ui';
 
-// Use 10.0.2.2 for Android Emulator, localhost for iOS
-const API_BASE_URL = 'http://10.0.2.2:3000';
-
-export default function App() {
-  const [loading, setLoading] = useState(false);
+function AppContent() {
   const [mode, setMode] = useState<'client' | 'provider'>('client');
+  const { user, token, logout } = useAuth();
+  const { createBooking, loading } = useBookingService();
 
   const handleSubmit = async (data: any) => {
-    setLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/bookings`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          bookingId: `book_${Date.now()}`,
-          clientId: 'client_mobile_001',
-          ...data,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
+      const result = await createBooking(data);
       Alert.alert('Success', `Booking created! ID: ${result.id}`);
-      console.log('Booking result:', result);
     } catch (err: any) {
       Alert.alert('Error', `Failed to create booking: ${err.message}`);
-      console.error('Booking error:', err);
-    } finally {
-      setLoading(false);
     }
   };
+
+  if (!token) {
+    return <LoginScreen />;
+  }
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Button 
-          title={mode === 'client' ? 'Switch to Provider' : 'Switch to Client'} 
-          onPress={() => setMode(mode === 'client' ? 'provider' : 'client')}
-        />
+        <Text>Role: {user?.role}</Text>
+        <Button title="Logout" onPress={logout} />
+        {user?.role === 'CLIENT' && (
+          <Button 
+            title="Switch to Provider View" 
+            onPress={() => setMode('provider')}
+          />
+        )}
+        {user?.role === 'PROVIDER' && mode === 'provider' && (
+          <Button 
+            title="Switch to Client View" 
+            onPress={() => setMode('client')}
+          />
+        )}
       </View>
       <View style={styles.content}>
-        {mode === 'client' ? (
+        {(mode === 'client' || user?.role === 'CLIENT') ? (
           <>
             {loading && <Text style={styles.loading}>Creating booking...</Text>}
             <BookingForm onSubmit={handleSubmit} />
           </>
         ) : (
-          <ProviderBookingList providerId="provider_001" />
+          <ProviderBookingList />
         )}
       </View>
     </SafeAreaView>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 

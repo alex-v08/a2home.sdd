@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Button, StyleSheet, ActivityIndicator } from 'react-native';
+import { useAuth } from '../context/AuthContext';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
@@ -11,14 +12,17 @@ interface Booking {
   location: { latitude: number; longitude: number };
 }
 
-export const ProviderBookingList = ({ providerId }: { providerId: string }) => {
+export const ProviderBookingList = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(false);
+  const { token } = useAuth();
 
   const fetchPendingBookings = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/bookings/pending`);
+      const response = await fetch(`${API_BASE_URL}/bookings/pending`, {
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
       const data = await response.json();
       setBookings(data);
     } catch (err) {
@@ -32,8 +36,10 @@ export const ProviderBookingList = ({ providerId }: { providerId: string }) => {
     try {
       await fetch(`${API_BASE_URL}/bookings/${bookingId}/accept`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ providerId }),
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
       });
       // Refresh the list
       fetchPendingBookings();

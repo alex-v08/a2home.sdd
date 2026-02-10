@@ -22,6 +22,7 @@ El sistema debe seguir principios de **Clean Architecture (Hexagonal)** tanto en
 ## 3. Funcionalidades Detalladas
 
 ### Módulo A: Identidad & Perfiles (Identity Domain)
+- [x] Autenticación JWT con Guards (Mock Login implementado).
 - [ ] Autenticación Centralizada (Keycloak/Auth0).
 - [ ] Registro Diferenciado (Cliente vs Profesional).
 - [ ] Verificación de Identidad (Subida de DNI, Matrícula).

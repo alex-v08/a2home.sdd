@@ -1,8 +1,9 @@
 import React from 'react';
-import { BookingForm, useBookingService } from '@a2home/ui';
+import { BookingForm, useBookingService, LoginScreen, useAuth } from '@a2home/ui';
 
 export default function HomePage() {
   const { createBooking, loading, error } = useBookingService();
+  const { user, token, logout } = useAuth();
 
   const handleSubmit = async (data: any) => {
     try {
@@ -15,8 +16,16 @@ export default function HomePage() {
     }
   };
 
+  if (!token) {
+    return <LoginScreen />;
+  }
+
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#f0f2f5' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#f0f2f5' }}>
+      <div style={{ position: 'absolute', top: 20, right: 20 }}>
+        <span>Logged in as: {user?.role}</span>
+        <button onClick={logout} style={{ marginLeft: 10 }}>Logout</button>
+      </div>
       {loading && <div style={{ position: 'absolute', top: 20 }}>Loading...</div>}
       <BookingForm onSubmit={handleSubmit} />
     </div>
