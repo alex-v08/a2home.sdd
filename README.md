@@ -1,31 +1,18 @@
-# A2Home - Uber for Home Services
+# A2Home - Uber for Services (SDD Project)
 
-## Project Overview
-A2Home is an on-demand platform connecting customers with home service professionals (plumbing, electricity, cleaning, etc.) in real-time.
+Este proyecto utiliza una metodología **Spec-Driven Development (SDD)** para automatizar la construcción de una plataforma de servicios on-demand.
 
-## Project Structure (Monorepo)
-```text
-.
-├── apps/
-│   ├── web/                # Next.js Application
-│   ├── mobile/             # React Native (Expo) Application
-│   └── api/                # NestJS Microservices (Gateway + Core Services)
-├── packages/
-│   ├── core/               # Shared Domain Logic (Entities, Use Cases)
-│   ├── ui/                 # Shared UI Components (Cross-platform compatible)
-│   └── config/             # Shared configuration (ESLint, TSConfig)
-├── docs/                   # Documentation
-├── SPEC.md                 # Product Specification (Source of Truth)
-└── ARCHITECTURE_DECISION.md # Technical Decisions
-```
+## 🚀 Inicio Rápido
 
-## Tech Stack
-- **Languages:** TypeScript
-- **Frontend:** Next.js (Web), React Native/Expo (Mobile)
-- **Backend:** NestJS (Microservices)
-- **Database:** PostgreSQL + PostGIS
-- **Auth:** Keycloak
-- **Infra:** Docker, Turborepo
+1.  **Instalar dependencias:** `npm install` (desde la raíz del monorepo).
+2.  **Iniciar Ciclo SDD:** `./sdd.sh`
+3.  **Ver Especificación:** Consultar `SPEC.md` para ver el roadmap.
 
-## Getting Started
-(Instructions to be added as setup progresses)
+## 🛠️ Tecnologías Principales
+- **Backend:** NestJS (Node.js) + PostGIS.
+- **Frontend/Mobile:** React Native (Expo) + Next.js (Solito).
+- **Arquitectura:** Clean Architecture / Hexagonal.
+- **Gestión:** SDD con Agentes de IA.
+
+## 📁 Estructura del Proyecto
+El proyecto está organizado como un Monorepo para maximizar la reutilización de código. Ver `ARCHITECTURE_DECISION.md` para más detalles.

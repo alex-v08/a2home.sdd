@@ -1,50 +1,51 @@
-# Architecture Decision Records (ADR) - A2Home
+# ARCHITECTURE DECISION: A2Home Platform
 
-## ADR 001: Tech Stack Selection
+## 1. Resumen del Negocio
+A2Home es una plataforma on-demand ("Uber para servicios") que conecta clientes con profesionales del hogar. Requiere alta confiabilidad en geolocalización, chat en tiempo real, gestión de pagos y una experiencia de usuario fluida tanto en Web como en Mobile.
 
-### Context
-We need a platform that supports Web (PWA) and Mobile (Native iOS/Android) for a "Uber for Services" model. Real-time geotracking, payments, and professional matching are key.
+## 2. Patrón Arquitectónico: Monolito Modular (Modulith)
+**Decisión:** Se opta por un **Monolito Modular** en lugar de Microservicios para la fase inicial.
+**Justificación:**
+- **Equipo/Fase:** Al ser un desarrollo inicial/MVP, un monolito modular reduce drásticamente la complejidad de despliegue y la sobrecarga de red (latencia).
+- **Consistencia:** Facilita la gestión de transacciones y la integridad de datos entre módulos (Booking, Payment, User).
+- **Escalabilidad Futura:** Los módulos estarán claramente desacoplados siguiendo Clean Architecture, permitiendo extraer microservicios específicos (ej. Tracking o Chat) si la carga lo requiere.
 
-### Decision
-1.  **Backend**: **Node.js with NestJS**.
-    *   *Rationale*: Facilitates a TypeScript-first monorepo. NestJS provides a robust framework for Hexagonal Architecture and Microservices.
-2.  **Mobile**: **React Native + Expo**.
-    *   *Rationale*: Best-in-class code sharing with Web when using TypeScript. Expo simplifies development for maps and notifications.
-3.  **Web**: **Next.js**.
-    *   *Rationale*: Optimized for SEO (important for a service marketplace) and shares the same ecosystem as React Native.
-4.  **Database**: **PostgreSQL + PostGIS**.
-    *   *Rationale*: Industry standard for geospatial queries (finding nearby providers).
-5.  **Event Bus**: **RabbitMQ / Redis PubSub**.
-    *   *Rationale*: Required for asynchronous communication between services and real-time updates.
+## 3. Stack Tecnológico
 
----
+### Backend: Node.js (TypeScript) + NestJS
+- **Razón:** Agilidad de desarrollo, excelente soporte para WebSockets (Socket.io) para chat y tracking, y facilidad para compartir tipos con el frontend mediante TypeScript.
+- **Base de Datos:** PostgreSQL con extensión **PostGIS** para consultas geoespaciales avanzadas (necesario para el matching de proveedores cercanos).
 
-## ADR 002: Architecture Pattern
+### Frontend & Mobile: Expo (React Native) + Solito (Next.js)
+- **Razón:** Se utilizará un **Monorepo** para compartir el 100% de la lógica de negocio, hooks y componentes de UI entre la Web y las Apps Mobile.
+- **Navegación:** Solito para unificar la navegación entre Next.js y React Native.
 
-### Context
-The project requires high testability and separation of concerns.
+### Infraestructura:
+- **Autenticación:** Keycloak (Integración mediante OpenID Connect).
+- **Cache/Real-time:** Redis para manejo de sesiones y pub/sub de coordenadas en tiempo real.
 
-### Decision
-**Microservices with Hexagonal Architecture (Clean Architecture)**.
-*   *Implementation*: Organized within a **Turborepo** monorepo.
-*   *Shared Logic*: A `packages/core` package containing domain entities, use cases, and validation logic in pure TypeScript (zero dependencies where possible).
+## 4. Ecosistema MCP
+Se integrarán los siguientes servidores para potenciar al agente de desarrollo:
+1. **Google Maps MCP:** Para validar implementaciones de tracking y cálculo de rutas.
+2. **PostgreSQL MCP:** Para generación automática de migraciones y esquemas Prisma/TypeORM.
+3. **GitHub MCP:** Para gestionar el progreso de las tareas y documentación técnica.
 
----
+## 5. Estrategia de IA (LLMOps)
+- **Agente Arquitecto:** `claude-3-5-sonnet` o `deepseek-r1` (Razonamiento de alto nivel).
+- **Agente Desarrollador:** `deepseek-coder-v2` o `gpt-4o` (Generación de código eficiente).
+- **Ejecución Local (opcional):** `ollama pull qwen2.5-coder:7b` para tareas de refactorización rápidas.
 
-## ADR 003: MCP Strategy (Model Context Protocol)
-
-### Decision
-We will utilize the following MCP servers to accelerate development:
-1.  **Postgres MCP**: For schema management and data exploration.
-2.  **Google Maps MCP**: For validating address logic and calculating distances.
-3.  **Keycloak/Auth MCP**: For managing identity providers and JWT validation logic.
-
----
-
-## ADR 004: LLM Strategy
-
-### Decision
-1.  **Design & Architecture**: Claude 3.5 Sonnet.
-2.  **Frontend/UI Implementation**: Claude 3.5 Sonnet (for Tailwind/React components).
-3.  **Backend Logic & Hexagonal Adapters**: Claude 3.5 Sonnet.
-4.  **Unit/Integration Testing**: GPT-4o-mini.
+## 6. Estructura de Carpetas (Monorepo)
+```text
+/a2home-sdd/
+├── apps/
+│   ├── web/                # Next.js Application
+│   └── mobile/             # Expo/React Native Application
+├── packages/
+│   ├── api/                # NestJS Backend
+│   ├── core/               # Domain Models, Use Cases (Shared)
+│   ├── ui/                 # Shared UI Components
+│   └── config/             # Shared ESLint, TSConfig, Tailwind
+├── .opencode/              # SDD Skills
+└── SPEC.md                 # Project Roadmap
+```
