@@ -1,5 +1,6 @@
 import { Module, Provider } from '@nestjs/common';
 import { BookingController } from './booking.controller';
+import { BookingGateway } from './booking.gateway';
 import { RequestService, AcceptBooking, BookingRepository } from '@a2home/core';
 import { PostgresBookingRepository } from '../infrastructure/repositories/PostgresBookingRepository';
 
@@ -32,6 +33,7 @@ const AcceptBookingProvider: Provider = {
 @Module({
   controllers: [BookingController],
   providers: [
+    BookingGateway,
     RepositoryProvider,
     BookingRepositoryProvider,
     RequestServiceProvider,

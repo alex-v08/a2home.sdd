@@ -4,6 +4,7 @@
   "main": "src/index.ts",
   "dependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "socket.io-client": "^4.8.3"
   }
 }

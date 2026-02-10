@@ -68,7 +68,9 @@ El sistema debe seguir principios de **Clean Architecture (Hexagonal)** tanto en
 - [x] Integración Frontend-Backend con API REST.
 
 ### Fase 4: Integración Real-Time
-- [ ] Chat y Tracking.
+- [x] WebSockets para actualizaciones de Booking en tiempo real.
+- [ ] Chat en tiempo real entre Cliente y Proveedor.
+- [ ] Live Tracking con Geolocalización.
 
 ---
 **Instrucciones para Agentes:**

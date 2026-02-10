@@ -6,17 +6,20 @@ import {
   LoginScreen, 
   AuthProvider, 
   useAuth,
-  useBookingService 
+  useBookingService,
+  BookingStatusTracker
 } from '@a2home/ui';
 
 function AppContent() {
   const [mode, setMode] = useState<'client' | 'provider'>('client');
+  const [currentBookingId, setCurrentBookingId] = useState<string | null>(null);
   const { user, token, logout } = useAuth();
   const { createBooking, loading } = useBookingService();
 
   const handleSubmit = async (data: any) => {
     try {
       const result = await createBooking(data);
+      setCurrentBookingId(result.id);
       Alert.alert('Success', `Booking created! ID: ${result.id}`);
     } catch (err: any) {
       Alert.alert('Error', `Failed to create booking: ${err.message}`);
@@ -32,7 +35,42 @@ function AppContent() {
       <View style={styles.header}>
         <Text>Role: {user?.role}</Text>
         <Button title="Logout" onPress={logout} />
-        {user?.role === 'CLIENT' && (
+        {user?.role === 'CLIENT' && !currentBookingId && (
+          <Button 
+            title="Switch to Provider View" 
+            onPress={() => setMode('provider')}
+          />
+        )}
+        {user?.role === 'PROVIDER' && mode === 'provider' && (
+          <Button 
+            title="Switch to Client View" 
+            onPress={() => setMode('client')}
+          />
+        )}
+      </View>
+      <View style={styles.content}>
+        {(mode === 'client' || user?.role === 'CLIENT') ? (
+          currentBookingId ? (
+            <View>
+              <BookingStatusTracker bookingId={currentBookingId} />
+              <Button 
+                title="Create New Booking" 
+                onPress={() => setCurrentBookingId(null)}
+              />
+            </View>
+          ) : (
+            <>
+              {loading && <Text style={styles.loading}>Creating booking...</Text>}
+              <BookingForm onSubmit={handleSubmit} />
+            </>
+          )
+        ) : (
+          <ProviderBookingList />
+        )}
+      </View>
+    </SafeAreaView>
+  );
+}
           <Button 
             title="Switch to Provider View" 
             onPress={() => setMode('provider')}
