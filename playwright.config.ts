@@ -22,7 +22,7 @@ export default defineConfig({
 
   webServer: [
     {
-      command: 'cd packages/api && npm start',
+      command: 'cd packages/api && npm run start',
       url: 'http://localhost:3000',
       timeout: 120 * 1000,
       reuseExistingServer: !process.env.CI,

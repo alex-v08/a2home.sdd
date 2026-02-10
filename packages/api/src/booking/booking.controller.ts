@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Patch, Param, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Get, Patch, Param, UseGuards, Inject } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { RequestService, RequestServiceInput, AcceptBooking, BookingRepository } from '@a2home/core';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -14,6 +14,7 @@ export class BookingController {
   constructor(
     private readonly requestService: RequestService,
     private readonly acceptBooking: AcceptBooking,
+    @Inject('BOOKING_REPOSITORY')
     private readonly bookingRepository: BookingRepository,
     private readonly bookingGateway: BookingGateway
   ) {}

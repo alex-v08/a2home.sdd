@@ -9,11 +9,6 @@ const RepositoryProvider: Provider = {
   useClass: PostgresBookingRepository,
 };
 
-const BookingRepositoryProvider: Provider = {
-  provide: BookingRepository,
-  useExisting: 'BOOKING_REPOSITORY',
-};
-
 const RequestServiceProvider: Provider = {
   provide: RequestService,
   useFactory: (repo: BookingRepository) => {
@@ -35,7 +30,6 @@ const AcceptBookingProvider: Provider = {
   providers: [
     BookingGateway,
     RepositoryProvider,
-    BookingRepositoryProvider,
     RequestServiceProvider,
     AcceptBookingProvider,
   ],
