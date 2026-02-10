@@ -49,6 +49,22 @@ export class PostgresBookingRepository implements BookingRepository {
     );
   }
 
+  async findPending(): Promise<Booking[]> {
+    const records = await this.prisma.booking.findMany({
+      where: { status: PrismaStatus.PENDING },
+    });
+
+    return records.map(record => new Booking(
+      record.id,
+      record.clientId,
+      record.providerId,
+      record.serviceId,
+      this.toDomainStatus(record.status),
+      new Money(record.amount, record.currency),
+      new GeoLocation(record.latitude, record.longitude)
+    ));
+  }
+
   async findNearbyProviders(location: GeoLocation, radius: number): Promise<Provider[]> {
     // This would ideally use PostGIS or a raw query, but for now we return empty as per core spec
     return [];

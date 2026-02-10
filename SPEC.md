@@ -34,7 +34,8 @@ El sistema debe seguir principios de **Clean Architecture (Hexagonal)** tanto en
 - [ ] Cotización Dinámica (Estimación de costo base).
 
 ### Módulo C: Ejecución & Tracking (Booking Domain)
-- [ ] Ciclo de Estado: Solicitado -> Aceptado -> En Camino -> En Progreso -> Finalizado.
+- [x] Ciclo de Estado: Solicitado -> Aceptado (Implementado flujo básico).
+- [ ] Ciclo de Estado Completo: En Camino -> En Progreso -> Finalizado.
 - [ ] Live Tracking (Mapa en vivo del profesional llegando).
 - [ ] Chat en Tiempo Real (WebSockets) con envío de fotos.
 - [ ] Botón de Pánico / Seguridad.

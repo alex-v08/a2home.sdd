@@ -1,4 +1,4 @@
-import { Booking } from "../../domain/model/Booking";
+import { Booking, BookingStatus } from "../../domain/model/Booking";
 import { GeoLocation } from "../../domain/model/GeoLocation";
 import { Provider } from "../../domain/model/Provider";
 import { BookingRepository } from "../../domain/ports/BookingRepository";
@@ -12,6 +12,10 @@ export class InMemoryBookingRepository implements BookingRepository {
 
   async findById(id: string): Promise<Booking | null> {
     return this.bookings.get(id) || null;
+  }
+
+  async findPending(): Promise<Booking[]> {
+    return Array.from(this.bookings.values()).filter(b => b.status === BookingStatus.PENDING);
   }
 
   async findNearbyProviders(location: GeoLocation, radius: number): Promise<Provider[]> {
