@@ -52,7 +52,7 @@ El sistema debe seguir principios de **Clean Architecture (Hexagonal)** tanto en
 - [x] **SETUP**: Inicializar Monorepo/Repositorio con la estructura base elegida.
 
 ### Fase 1: Core Domain (Lógica Pura)
-- [ ] Definir Entidades del Dominio (User, Service, Booking).
+- [x] Definir Entidades del Dominio (User, Service, Booking).
 - [ ] Implementar Casos de Uso Core (Login, CreateRequest, MatchProvider).
 
 ### Fase 2: Adaptadores Backend (Microservicios)
