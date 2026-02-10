@@ -56,6 +56,7 @@ El sistema debe seguir principios de **Clean Architecture (Hexagonal)** tanto en
 - [x] Implementar Casos de Uso Core (Login, CreateRequest, MatchProvider).
 
 ### Fase 2: Adaptadores Backend (Microservicios)
+- [x] Setup inicial de NestJS y exportación de Casos de Uso del Core.
 - [ ] Migrar/Adaptar servicios existentes a la nueva especificación estricta.
 
 ### Fase 3: UI Implementation
