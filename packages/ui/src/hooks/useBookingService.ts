@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 export const useBookingService = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { token } = useAuth();
 
   const createBooking = async (data: any) => {
     setLoading(true);
@@ -13,10 +15,12 @@ export const useBookingService = () => {
     try {
       const response = await fetch(`${API_BASE_URL}/bookings`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
         body: JSON.stringify({
           bookingId: `book_${Date.now()}`,
-          clientId: 'client_demo_001',
           ...data,
         }),
       });

@@ -1,7 +1,10 @@
-import { Controller, Post, Body, Get, Patch, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, Patch, Param, UseGuards } from '@nestjs/common';
 import { RequestService, RequestServiceInput, AcceptBooking, BookingRepository } from '@a2home/core';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { CurrentUser } from '../auth/current-user.decorator';
 
 @Controller('bookings')
+@UseGuards(JwtAuthGuard)
 export class BookingController {
   constructor(
     private readonly requestService: RequestService,
@@ -10,8 +13,13 @@ export class BookingController {
   ) {}
 
   @Post()
-  async create(@Body() input: RequestServiceInput) {
-    return await this.requestService.execute(input);
+  async create(@Body() input: Omit<RequestServiceInput, 'clientId'>, @CurrentUser() user: any) {
+    const fullInput: RequestServiceInput = {
+      ...input,
+      clientId: user.userId,
+      bookingId: input.bookingId || `book_${Date.now()}`,
+    };
+    return await this.requestService.execute(fullInput);
   }
 
   @Get('pending')
@@ -20,8 +28,8 @@ export class BookingController {
   }
 
   @Patch(':id/accept')
-  async accept(@Param('id') id: string, @Body() body: { providerId: string }) {
-    await this.acceptBooking.execute({ bookingId: id, providerId: body.providerId });
+  async accept(@Param('id') id: string, @CurrentUser() user: any) {
+    await this.acceptBooking.execute({ bookingId: id, providerId: user.userId });
     return { message: 'Booking accepted successfully' };
   }
 }
