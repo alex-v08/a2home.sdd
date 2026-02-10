@@ -72,6 +72,11 @@ El sistema debe seguir principios de **Clean Architecture (Hexagonal)** tanto en
 - [ ] Chat en tiempo real entre Cliente y Proveedor.
 - [ ] Live Tracking con Geolocalización.
 
+### Fase 5: Quality Assurance
+- [x] Documentación API con Swagger (OpenAPI).
+- [x] Diagramas Mermaid de flujos clave.
+- [x] Tests unitarios del Core Domain (Jest).
+
 ---
 **Instrucciones para Agentes:**
 Este archivo es la fuente de la verdad. Si una tarea está marcada como `[ ]`, es prioritaria. Al terminar, marcar con `[x]`.
