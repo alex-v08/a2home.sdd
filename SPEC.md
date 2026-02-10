@@ -48,8 +48,8 @@ El sistema debe seguir principios de **Clean Architecture (Hexagonal)** tanto en
 ## 4. Roadmap de Desarrollo (SDD)
 
 ### Fase 0: Definición Tecnológica y Setup
-- [ ] **ANALYSIS**: Evaluar y Definir Stack Tecnológico definitivo para "Mobile + Web" maximizando código compartido. (¿React Native + Next.js? ¿Flutter? ¿Expo?). Generar `ARCHITECTURE_DECISION.md`.
-- [ ] **SETUP**: Inicializar Monorepo/Repositorio con la estructura base elegida.
+- [x] **ANALYSIS**: Evaluar y Definir Stack Tecnológico definitivo para "Mobile + Web" maximizando código compartido. (¿React Native + Next.js? ¿Flutter? ¿Expo?). Generar `ARCHITECTURE_DECISION.md`.
+- [x] **SETUP**: Inicializar Monorepo/Repositorio con la estructura base elegida.
 
 ### Fase 1: Core Domain (Lógica Pura)
 - [ ] Definir Entidades del Dominio (User, Service, Booking).
