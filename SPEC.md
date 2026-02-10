@@ -61,8 +61,8 @@ El sistema debe seguir principios de **Clean Architecture (Hexagonal)** tanto en
 - [ ] Migrar/Adaptar servicios existentes a la nueva especificación estricta.
 
 ### Fase 3: UI Implementation
-- [ ] Implementar UI Web (Next.js).
-- [ ] Implementar UI Mobile.
+- [x] Implementar UI Web (Next.js) con componente compartido.
+- [x] Implementar UI Mobile (Expo) con componente compartido.
 
 ### Fase 4: Integración Real-Time
 - [ ] Chat y Tracking.

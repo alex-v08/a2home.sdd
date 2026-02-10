@@ -1,0 +1,9 @@
+{
+  "name": "@a2home/ui",
+  "version": "0.1.0",
+  "main": "src/index.ts",
+  "dependencies": {
+    "react": "*",
+    "react-native": "*"
+  }
+}
